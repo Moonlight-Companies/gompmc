@@ -10,7 +10,7 @@ import (
 type Consumer[T any] struct {
 	id        string
 	owner     *Producer[T]
-	input     chan T
+	Messages  chan T
 	lastUsed  time.Time
 	ctx       context.Context
 	cancel    context.CancelFunc
@@ -24,7 +24,7 @@ func newConsumer[T any](owner *Producer[T], ctx context.Context, consumer_buffer
 	result = &Consumer[T]{
 		id:        CreateID(),
 		owner:     owner,
-		input:     make(chan T, consumer_buffer_size),
+		Messages:  make(chan T, consumer_buffer_size),
 		lastUsed:  time.Now(),
 		ctx:       ctx,
 		cancel:    cancel,

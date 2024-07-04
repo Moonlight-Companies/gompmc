@@ -32,7 +32,7 @@ func TestFanoutAll(t *testing.T) {
 			defer wg.Done()
 			for {
 				select {
-				case item := <-c.input:
+				case item := <-c.Messages:
 					*resultSlice = append(*resultSlice, item)
 				case <-ctx.Done():
 					return
@@ -98,7 +98,7 @@ func TestFanoutSingle(t *testing.T) {
 			defer wg.Done()
 			for {
 				select {
-				case item := <-c.input:
+				case item := <-c.Messages:
 					*resultSlice = append(*resultSlice, item)
 				case <-ctx.Done():
 					return
@@ -173,7 +173,7 @@ func TestFanoutLRU(t *testing.T) {
 			defer wg.Done()
 			for {
 				select {
-				case item := <-c.input:
+				case item := <-c.Messages:
 					*resultSlice = append(*resultSlice, item)
 				case <-ctx.Done():
 					return

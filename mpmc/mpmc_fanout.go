@@ -138,7 +138,7 @@ func (f *Producer[T]) goroutine_Producer_single() {
 			if len(f.consumers) > 0 {
 				selected := f.consumers[rand.Intn(len(f.consumers))]
 				select {
-				case selected.input <- item:
+				case selected.Messages <- item:
 					selected.lastUsed = time.Now()
 				default:
 					f.logger.Warnln("Consumer buffer is full, dropping item")
@@ -165,7 +165,7 @@ func (f *Producer[T]) goroutine_Producer_lru() {
 				sort.Sort(f.consumers)
 				lru := f.consumers[0]
 				select {
-				case lru.input <- item:
+				case lru.Messages <- item:
 					lru.lastUsed = time.Now()
 				default:
 					f.logger.Warnln("Consumer buffer is full, dropping item")
@@ -190,7 +190,7 @@ func (f *Producer[T]) goroutine_Producer_all() {
 			f.consumers_mu.Lock()
 			for _, consumer := range f.consumers {
 				select {
-				case consumer.input <- item:
+				case consumer.Messages <- item:
 					consumer.lastUsed = time.Now()
 				default:
 					f.logger.Warnln("Consumer buffer is full, dropping item")
