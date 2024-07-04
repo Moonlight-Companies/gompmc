@@ -9,7 +9,7 @@ import (
 	"sync"
 	"time"
 
-	"gompmc/logger"
+	"github.com/Moonlight-Companies/gompmc/logger"
 )
 
 var (
