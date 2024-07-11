@@ -34,6 +34,10 @@ func newConsumer[T any](owner *Producer[T], ctx context.Context, consumer_buffer
 	return
 }
 
+func (c *Consumer[T]) Id() string {
+	return c.id
+}
+
 // Close shuts down the Consumer.
 // It ensures that the close operation is performed only once.
 func (c *Consumer[T]) Close() {
