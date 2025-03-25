@@ -9,7 +9,8 @@ import (
 	"sync"
 	"time"
 
-	"github.com/Moonlight-Companies/gompmc/logger"
+	"github.com/Moonlight-Companies/gologger/coloransi"
+	"github.com/Moonlight-Companies/gologger/logger"
 )
 
 var (
@@ -46,7 +47,7 @@ type Producer[T any] struct {
 // It returns a pointer to the new Producer.
 func NewProducer[T any](kind ProducerKind, input_buffer_size, consumer_buffer_size uint) (result *Producer[T]) {
 	result = &Producer[T]{
-		logger:               logger.NewLogger(logger.LogLevelDebug, TypeName[T]()),
+		logger:               logger.NewLogger(coloransi.Color(coloransi.Black, coloransi.BrightYellow, TypeName[T]())),
 		input:                make(chan T, input_buffer_size),
 		consumer_buffer_size: consumer_buffer_size,
 		consumers:            ConsumerList[T]{},
